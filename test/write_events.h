@@ -6,6 +6,8 @@
 #include "edm4hep/SimTrackerHitCollection.h"
 #include "edm4hep/CaloHitContributionCollection.h"
 #include "edm4hep/SimCalorimeterHitCollection.h"
+#include "edm4hep/TPCHitCollection.h"
+#include "edm4hep/TrackerHitPlaneCollection.h"
 
 // STL
 #include <iostream>
@@ -33,6 +35,13 @@ void write(std::string outfilename) {
 
   auto& sccons = store.create<edm4hep::CaloHitContributionCollection>("SimCalorimeterHitContributions");
   writer.registerForWrite("SimCalorimeterHitContributions");
+
+  auto& tpchs = store.create<edm4hep::TPCHitCollection>("TPCHits");
+  writer.registerForWrite("TPCHits");
+
+  auto& thps = store.create<edm4hep::TrackerHitPlaneCollection>("TrackerHitPlanes");
+  writer.registerForWrite("TrackerHitPlanes");
+
 
 
   unsigned nevents = 10 ;
@@ -180,6 +189,51 @@ void write(std::string outfilename) {
 
     std::cout << "\n collection:  " << "SimCalorimeterHits" <<  " of type " <<  schs.getValueTypeName() << "\n\n"
         << schs << std::endl ;
+
+
+    //===============================================================================
+    // write some TPCHits:
+    int ntpch = 5 ;
+    for(int j=0 ; j<ntpch ; ++j){
+      auto tpch1 = tpchs.create() ;
+      tpch1.setCellID( 0xabadcaffee ) ;
+      tpch1.setTime( j*3. ) ;
+      tpch1.setCharge( j*2. ) ;
+
+      auto tpch2 = tpchs.create() ;
+      tpch2.setCellID( 0xcaffeebabe ) ;
+      tpch2.setTime( j*3. ) ;
+      tpch2.setCharge( -j*2. ) ;
+    }
+
+    std::cout <<"\n collection: " << "Time Projection Chamber Hits" << " of type " << tpchs.getValueTypeName() << "\n\n"
+	      << tpchs << std::endl ;
+ 
+
+
+     //===============================================================================
+    // write some TrackerHitPlanes:
+    int nthp = 5 ;
+    for(int j=0 ; j < nthp ; ++j){
+      auto thp1 = thps.create() ;
+      thp1.setCellID( 0xabadcaffee ) ;
+      thp1.setTime( j*3. ) ;
+      thp1.setEDep( j * 0.000001 ) ;
+      thp1.setPosition( { j*2. , j*3. , j*5. } ) ;
+
+      auto thp2 = thps.create() ;
+      thp2.setCellID( 0xcaffeebabe ) ;
+      thp2.setTime( j*3. ) ;
+      thp2.setEDep( j * 0.0000031 ) ;
+      thp2.setPosition( { -j*2. , -j*3. , -j*5. } ) ;
+    }
+
+
+
+    std::cout <<"\n collection: " << "Tracker Hit Planes" << " of type " << thps.getValueTypeName() << "\n\n"
+	      << thps << std::endl ;
+ 
+
 
     //===============================================================================
 
