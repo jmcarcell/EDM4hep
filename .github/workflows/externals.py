@@ -5,11 +5,11 @@ import re
 import yaml
 
 PACKAGES = '/root/.spack/packages.yaml'
-EXTERNALS = ['root', 'py-cython', 'py-pip', 'libyaml', 'py-setuptools', 'py-wheel', 'py-markupsafe',
+EXTERNALS = ['root', 'cmake', 'python', 'py-cython', 'py-pip', 'libyaml', 'py-setuptools', 'py-wheel', 'py-markupsafe',
              'py-jinja2', 'py-pyyaml', 'nlohmann-json', 'intel-tbb', 'boost', 'gaudi', 'dd4hep', 'gdb']
 VERSION = re.compile('\d*\.\d*\.\d*')
 
-out = subprocess.check_output(f'spack external {' '.join(EXTERNALS)}'.split()).decode()
+out = subprocess.check_output(f'spack external find {" ".join(EXTERNALS)}'.split()).decode()
 print(out)
 with open(PACKAGES) as f:
     base = yaml.safe_load(f.read())

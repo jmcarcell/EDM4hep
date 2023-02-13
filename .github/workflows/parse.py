@@ -5,7 +5,10 @@ import requests
 
 URL_PATTERN = r'https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)'
 
-text = sys.argv[1]
+if len(sys.argv) > 1:
+    text = sys.argv[1]
+else:
+    exit()
 # text = """blablablablaaoeu aoeuh assoehu saoetu hasoeuh 
 # important pRPRP this is atoeut haetu.
 # asaeu depends on https://github.com/jmcarcell/k4FWCore/pull/1"""

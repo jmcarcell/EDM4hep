@@ -8,6 +8,7 @@ import re
 CONFIG = '/Package/spack/var/spack/environments/dev/spack.yaml'
 CMAKE_PATHS = ['nlohmann-json']
 CPATHS = ['vdt']
+PYTHON = ['py-markupsafe']
 VERSION = re.compile('\d*\.\d*\.\d*')
 
 with open(CONFIG) as f:
@@ -30,12 +31,15 @@ if 'compilers' not in base['spack']:
        'CPATH': '/cvmfs/sw.hsf.org/spackages6/vdt/0.4.3/x86_64-centos7-gcc11.2.0-opt/wth5f/include'}},
      'extra_rpaths': []}}]
 if 'prepend_path' not in base['spack']['compilers'][0]['compiler']['environment']:
-    base['spack']['compilers'][0]['compiler']['environment']['prepend_path'] = {'CMAKE_PREFIX_PATH': '', 'CPATH': ''}
+    base['spack']['compilers'][0]['compiler']['environment']['prepend_path'] = {'CMAKE_PREFIX_PATH': '', 'CPATH': '', 'PYTHONPATH': ''}
 
 paths = [[x for x in os.environ['CMAKE_PREFIX_PATH'].split(':') if f'/{p}/' in x][0] for p in CMAKE_PATHS]
 base['spack']['compilers'][0]['compiler']['environment']['prepend_path']['CMAKE_PREFIX_PATH'] = ':'.join(base['spack']['compilers'][0]['compiler']['environment']['prepend_path']['CMAKE_PREFIX_PATH'].split(':')+paths)
 
 paths = [[os.path.join(x, 'include') for x in os.environ['CMAKE_PREFIX_PATH'].split(':') if f'/{p}/' in x][0] for p in CPATHS]
 base['spack']['compilers'][0]['compiler']['environment']['prepend_path']['CPATH'] = ':'.join(base['spack']['compilers'][0]['compiler']['environment']['prepend_path']['CPATH'].split(':')+paths)
+
+paths = [[os.path.join(x, 'python') for x in os.environ['CMAKE_PREFIX_PATH'].split(':') if f'/{p}/' in x][0] for p in PYTHON]
+base['spack']['compilers'][0]['compiler']['environment']['prepend_path']['PYTHONPATH'] = ':'.join(base['spack']['compilers'][0]['compiler']['environment']['prepend_path']['PYTHONPATH'].split(':')+paths)
 
 yaml.dump(base, open(CONFIG, 'w'))
