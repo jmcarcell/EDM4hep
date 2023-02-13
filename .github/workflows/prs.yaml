@@ -40,7 +40,7 @@ jobs:
         spack repo add .;\
         cd ..;\
         python3 /Package/main/.github/workflows/externals.py;\
-        branch_packages=$(python3 /Package/main/.github/workflows/parse.py ${{ github.event.pull_request.body }});\
+        branch_packages=$(python3 /Package/main/.github/workflows/parse.py "${{ github.event.pull_request.body }}");\
         # branch_packages=""
         echo "branche_packages = $branch_packages";\
         spack env create dev;\
