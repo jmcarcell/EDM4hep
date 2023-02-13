@@ -12,13 +12,17 @@ if len(sys.argv) == 3:
     packages = [x.split() for x in sys.argv[2].split('\n')]
 else:
     packages = []
+# Spack uses the names of the repo in lower caps
+for p in packages:
+    p[1] = p[1].lower()
+repos = set(p[1] for p in packages)
 
 # packages.append('jmcarcell podio test'.split())
 # print(packages)
 
 out = subprocess.check_output(f'spack dependents {name}'.split()).decode()
 for p in out.split():
-    if p in EXCLUDE:
+    if p in EXCLUDE or p in repos:
         continue
     if p not in ['podio', 'edm4hep', 'k4edm4hep2lcioconv']:
         continue
@@ -31,5 +35,5 @@ for owner, repo, branch in packages:
     print(owner, repo, branch)
     if branch:
         subprocess.check_output(f'git clone https://github.com/{owner}/{repo} --branch {branch} --depth 1', shell=True)
-        subprocess.check_output(f'spack develop --no-clone --path {os.path.join(pwd, repo)} {repo}@master', shell=True)
+        subprocess.check_output(f'spack develop --no-clone --path {os.path.join(pwd, repo)} {repo.lower()}@master', shell=True)
     subprocess.check_output(f'spack add {repo.lower()}@master', shell=True)
