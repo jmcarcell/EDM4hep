@@ -38,7 +38,7 @@ base['spack']['compilers'][0]['compiler']['environment']['prepend_path']['CMAKE_
 paths = [[os.path.join(x, 'include') for x in os.environ['CMAKE_PREFIX_PATH'].split(':') if f'/{p}/' in x][0] for p in CPATHS]
 base['spack']['compilers'][0]['compiler']['environment']['prepend_path']['CPATH'] = ':'.join(base['spack']['compilers'][0]['compiler']['environment']['prepend_path']['CPATH'].split(':')+paths)
 
-paths = [[os.path.join(x, 'python') for x in os.environ['CMAKE_PREFIX_PATH'].split(':') if f'/{p}/' in x][0] for p in PYTHON]
+paths = [[os.path.join(x, 'lib/python3.9/site-packages') for x in os.environ['CMAKE_PREFIX_PATH'].split(':') if f'/{p}/' in x][0] for p in PYTHON]
 base['spack']['compilers'][0]['compiler']['environment']['prepend_path']['PYTHONPATH'] = ':'.join(base['spack']['compilers'][0]['compiler']['environment']['prepend_path']['PYTHONPATH'].split(':')+paths)
 
 yaml.dump(base, open(CONFIG, 'w'))
