@@ -21,7 +21,7 @@ jobs:
       run: |
          docker exec CI_container /bin/bash -c 'cd ./Package/main;\
          echo "BODY: " ;\
-         echo ${{ github.event.pull_request.body }};\
+         # echo ${{ github.event.pull_request.body }};\
          '
     - name: Fetch dependents
       run: |
