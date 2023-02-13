@@ -27,8 +27,7 @@ if 'compilers' not in base['spack']:
      'operating_system': 'centos7',
      'target': 'x86_64',
      'modules': [],
-     'environment': {'prepend_path': {'CMAKE_PREFIX_PATH': '/cvmfs/sw.hsf.org/spackages6/nlohmann-json/3.10.5/x86_64-centos7-gcc11.2.0-opt/v3dm7',
-       'CPATH': '/cvmfs/sw.hsf.org/spackages6/vdt/0.4.3/x86_64-centos7-gcc11.2.0-opt/wth5f/include'}},
+     'environment': {},
      'extra_rpaths': []}}]
 if 'prepend_path' not in base['spack']['compilers'][0]['compiler']['environment']:
     base['spack']['compilers'][0]['compiler']['environment']['prepend_path'] = {'CMAKE_PREFIX_PATH': '', 'CPATH': '', 'PYTHONPATH': ''}
