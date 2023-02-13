@@ -1,6 +1,6 @@
 name: linux
 
-on: [push, pull_request]
+on: pull_request
 
 jobs:
   test:
@@ -8,31 +8,58 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cvmfs_base: ['sft.cern.ch/lcg/views']
-        ENVIRONMENT: ['dev3/latest/x86_64-centos7-gcc11-opt']
-        include:
-        - cvmfs_base: 'sw.hsf.org'
-          ENVIRONMENT: 'key4hep'
-        - cvmfs_base: 'sw-nightlies.hsf.org'
-          ENVIRONMENT: 'key4hep'
+        cvmfs_base: ['sw-nightlies.hsf.org']
+        ENVIRONMENT: ['key4hep']
     steps:
     - uses: actions/checkout@v3
     - uses: cvmfs-contrib/github-action-cvmfs@v3
+
     - name: Start container
       run: |
-        docker run -it --name CI_container -v ${GITHUB_WORKSPACE}:/Package -v /cvmfs:/cvmfs:shared -d ghcr.io/aidasoft/centos7:latest /bin/bash
-    - name: Fetch packages
-      run: |
-        docker exec CI_container /bin/bash -c 'cd Package;\
-        git clone https://github.com/key4hep/EDM4hep --depth 1'
+        docker run -it --name CI_container -v ${GITHUB_WORKSPACE}:/Package/main -v /cvmfs:/cvmfs:shared -d  ghcr.io/aidasoft/centos7:latest /bin/bash
     - name: CMake Configure
       run: |
-         docker exec CI_container /bin/bash -c 'cd Package;\
+         docker exec CI_container /bin/bash -c 'cd ./Package/main;\
+         echo "BODY: " ;\
+         echo ${{ github.event.pull_request.body }};\
          mkdir -p build install;\
          source /cvmfs/${{ matrix.cvmfs_base }}/${{ matrix.ENVIRONMENT }}/setup.sh;\
          cd build;\
          cmake -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_FLAGS=" -fdiagnostics-color=always " -G Ninja ..;\
-         ninja -k0 install'
+         '
+         # ninja -k0 install'
+    - name: Fetch dependents
+      run: |
+        docker exec CI_container /bin/bash -c 'cd ./Package;\
+        # Lower caps name
+        name=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]');\
+        pip3 install --user requests
+        ./main/.github/scripts/fetch.sh $1;\
+        ls -lah;\
+
+        name=podio
+        yum install -y glibc-devel git
+        cd Package
+        source /cvmfs/sw-nightlies.hsf.org/key4hep/setup.sh;\
+        git clone https://github.com/spack/spack --depth 1;\
+        source spack/share/spack/setup-env.sh;\
+        git clone https://github.com/key4hep/key4hep-spack --depth 1;\
+        cd key4hep-spack;\
+        spack repo add .;\
+        cd ..;\
+        python3 /Package/main/.github/workflows/externals.py
+        branch_packages=$(python3 /Package/main/.github/workflows/parse.py ${{ github.event.pull_request.body }})
+        branch_packages=""
+        spack env create dev
+        spack env activate dev
+        python3 /Package/main/.github/workflows/config.py
+        python3 /Package/main/.github/workflows/fetch_and_checkout.py $name $branch_packages
+        cd main
+        spack develop --no-clone --path $PWD $name@master
+        spack add $name@master
+        spack concretize -f
+
+        '
     # - name: Test
     #   run: |
     #     docker exec CI_container /bin/bash -c 'cd ./Package;\
