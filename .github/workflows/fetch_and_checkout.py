@@ -32,4 +32,4 @@ for owner, repo, branch in packages:
     if branch:
         subprocess.check_output(f'git clone https://github.com/{owner}/{repo} --branch {branch} --depth 1', shell=True)
         subprocess.check_output(f'spack develop --no-clone --path {os.path.join(pwd, repo)} {repo}@master', shell=True)
-    subprocess.check_output(f'spack add {repo}@master', shell=True)
+    subprocess.check_output(f'spack add {repo.lower()}@master', shell=True)

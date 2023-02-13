@@ -46,7 +46,7 @@ jobs:
         spack env create dev;\
         spack env activate dev;\
         python3 /Package/main/.github/workflows/config.py;\
-        python3 /Package/main/.github/workflows/fetch_and_checkout.py $name $branch_packages;\
+        python3 /Package/main/.github/workflows/fetch_and_checkout.py $name "$branch_packages";\
         cd main;\
         spack develop --no-clone --path $PWD $name@master;\
         spack add $name@master;\
