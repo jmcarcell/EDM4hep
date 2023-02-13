@@ -340,7 +340,7 @@ datatypes :
 
 
  #----------  TPCHit
-  edm4hep::TPCHit:
+  edm4hep::TPChit:
     Description: "Time Projection Chamber Hit"
     Author : "F.Gaede, DESY"
     Members:
