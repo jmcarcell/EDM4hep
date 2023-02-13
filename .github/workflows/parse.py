@@ -5,10 +5,10 @@ import requests
 
 URL_PATTERN = r'https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)'
 
-# text = sys.argv[1]
-text = """blablablablaaoeu aoeuh assoehu saoetu hasoeuh 
-important pRPRP this is atoeut haetu.
-asaeu depends on https://github.com/jmcarcell/k4FWCore/pull/1"""
+text = sys.argv[1]
+# text = """blablablablaaoeu aoeuh assoehu saoetu hasoeuh 
+# important pRPRP this is atoeut haetu.
+# asaeu depends on https://github.com/jmcarcell/k4FWCore/pull/1"""
 
 # print('Parsing text in the PR to find other branches that will be compiled together...')
 res = re.search(f'[dD]epends +(?:on)? *{URL_PATTERN}', text)
@@ -24,5 +24,4 @@ for group in res.groups():
     response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/pulls/{number}')
     js = response.json()
     _, branch = js['head']['label'].split(':')
-    print(owner, repo, branch)
     print(owner, repo, branch)
