@@ -8,14 +8,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cvmfs_base: ['sft.cern.ch/lcg/views']
-        ENVIRONMENT: ['dev3/latest/x86_64-centos7-gcc11-opt']
         include:
-        - cvmfs_base: 'sw.hsf.org'
-          ENVIRONMENT: 'key4hep'
         - cvmfs_base: 'sw-nightlies.hsf.org'
           ENVIRONMENT: 'key4hep'
     steps:
     - uses: actions/checkout@v3
     - uses: cvmfs-contrib/github-action-cvmfs@v3
-    - uses: key4hep-actions/build-downstream@main
+    - uses: key4hep/key4hep-actions/build-downstream@main
