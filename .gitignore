@@ -12,8 +12,6 @@ install
 *edm4hep.json
 
 # podio generated code files
-edm4hep/edm4hep
-edm4hep/src
 podio_generated_files.cmake
 
 # CI subfolders
