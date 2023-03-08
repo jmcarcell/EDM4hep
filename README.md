@@ -5,7 +5,7 @@
 
 
 A generic event data model for future HEP collider experiments.
-
+             
 ![](doc/edm4hep_diagram.svg)
 
 **Componets**                                         
