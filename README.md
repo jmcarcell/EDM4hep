@@ -1,14 +1,14 @@
 
 [![key4hep](https://github.com/key4hep/EDM4hep/workflows/key4hep_linux/badge.svg)](https://github.com/key4hep/EDM4hep/actions/workflows/key4hep_linux.yml)
 [![linux](https://github.com/key4hep/EDM4hep/actions/workflows/lcg_linux_with_podio.yml/badge.svg)](https://github.com/key4hep/EDM4hep/actions/workflows/lcg_linux_with_podio.yml)
-# EDM4hep                     
+# EDM4hep
 
 
 A generic event data model for future HEP collider experiments.
 
 ![](doc/edm4hep_diagram.svg)
 
-**Componets**                                         
+**Componets**
 
 | | | |
 |-|-|-|
@@ -17,7 +17,7 @@ A generic event data model for future HEP collider experiments.
 | [Quantity](https://github.com/key4hep/EDM4hep/blob/master/edm4hep.yaml#L103) | [Hypothesis ](https://github.com/key4hep/EDM4hep/blob/master/edm4hep.yaml#L111) | [HitLevelData](https://github.com/key4hep/EDM4hep/blob/master/edm4hep.yaml#L118)  |
 
 
-**Datatypes**                    
+**Datatypes**
 
 | | | |
 |-|-|-|
