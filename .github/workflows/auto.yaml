@@ -18,7 +18,7 @@ jobs:
           python-version: 3.x
       - run:
           pip install pre-commit
-          pre-commit --all-files
+          pre-commit run --all-files
 
       # Other steps that change files in the repository
 
