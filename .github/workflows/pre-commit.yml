@@ -23,5 +23,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run pre-commit
         run: |
+             echo /etc/os-release
              source /cvmfs/sw-nightlies.hsf.org/key4hep/setup.sh
              pre-commit run --all-files
