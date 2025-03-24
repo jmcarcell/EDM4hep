@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/key4hep/key4hep-images/alma9-cvmfs
-      options: --privileged
+      options: --privileged --entrypoint ""
     steps:
       - uses: actions/checkout@v4
       - name: Run pre-commit
