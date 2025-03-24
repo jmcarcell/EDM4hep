@@ -17,14 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/key4hep/key4hep-images/alma9-cvmfs
-      options: --privileged --entrypoint ""
     steps:
-      - uses: actions/checkout@v4
       - name: Run pre-commit
         run: |
-             cat /etc/os-release
-             ls /cvmfs/sft.cern.ch/
-             source /cvmfs/sw-nightlies.hsf.org/key4hep/setup.sh
-             pre-commit run --all-files
+             docker run -v ${GITHUB_WORKSPACE}:/workspace -w /workspace ghcr.io/key4hep/key4hep-images/alma9-cvmfs /bin/bash -c "source /cvmfs/sw-nightlies.hsf.org/key4hep/setup.sh && pre-commit run --all-files"
