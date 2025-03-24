@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: key4hep/alma9-cvmfs
+      image: ghcr.io/key4hep/key4hep-images/alma9
     steps:
       - uses: actions/checkout@v4
       - name: Run pre-commit
