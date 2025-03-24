@@ -17,11 +17,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
     container:
       image: key4hep/alma9-cvmfs
     steps:
+      - uses: actions/checkout@v4
       - name: Run pre-commit
         run: pre-commit run --all-files
-    
