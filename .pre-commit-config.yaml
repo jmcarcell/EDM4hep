@@ -1,30 +1,8 @@
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
-    hooks:
-      - id: mixed-line-ending
-      - id: trailing-whitespace
-        exclude: (doc/ReleaseNotes.md)
   - repo: local
     hooks:
-      - id: clang-format
-        name: clang-format
-        entry: .github/scripts/clang-format-hook
-        exclude: (edm4hep/(edm4hep|src)/.*(h|cc)$|EDM4HEPVersion.h)
-        types: [c++]
+      - id: key4hep
+        name: key4hep
+        entry: ./.github/scripts/run_pre_commit.py
         language: system
-      - id: readme-links-check
-        name: README links check
-        entry: python ./scripts/updateReadmeLinks.py --check
-        files: (^README.md$)
-        language: system
-      - id: ruff
-        name: ruff
-        entry: ruff check --force-exclude
-        types: [python]
-        language: system
-      - id: ruff-format
-        name: ruff-format
-        entry: ruff format --force-exclude
-        types: [python]
-        language: system
+        pass_filenames: false
