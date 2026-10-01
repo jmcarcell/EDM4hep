@@ -18,4 +18,4 @@ jobs:
       fail-fast: false
     steps:
     - uses: actions/checkout@v4
-    - uses: key4hep/key4hep-actions/downstream-build@main
+    - uses: key4hep/key4hep-actions/downstream-build@downstream-build-lcg
